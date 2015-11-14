@@ -1,11 +1,11 @@
 #include "mainwindow.h"
-#include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    MainWindow pingpong;
+    pingpong.setWindowTitle("Cheick | PINGPONG");
+    pingpong.show();
 
     return a.exec();
 }
