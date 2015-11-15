@@ -24,10 +24,11 @@ public:
     //Get model
     Model* getModel();
 signals:
-
+    void movePaddle(const char,int);
 public slots:
 
 private:
+    int increment;
     Model* m_Model;
     GameEngine* m_Engine;
     void drawBackground(QPainter*);

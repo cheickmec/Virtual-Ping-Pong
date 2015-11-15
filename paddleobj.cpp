@@ -1,5 +1,5 @@
 #include "paddleobj.h"
-
+#include <QDebug>
 
 /*Constructor: sets the x position*/
 PaddleObj::PaddleObj(int xPos)
@@ -29,6 +29,7 @@ QRect* PaddleObj::getRect(){
 /*drawing function*/
 void PaddleObj::draw(QPainter* p){
     p->save();
+    p->drawText(400 + (this->getRect()->x() - 400)/10,20,QString::number(this->score));
     p->setPen(QColor("#d4d4d4"));
     p->setBrush(QBrush(Qt::white));
     p->drawRect(*rect);

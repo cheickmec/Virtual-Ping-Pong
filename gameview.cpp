@@ -1,6 +1,7 @@
 #include "gameview.h"
 #include <QPainter>
 #include <QKeyEvent>
+#include <QtGui>
 
 /*Constructor*/
 GameView::GameView(QWidget *parent) :
@@ -10,10 +11,12 @@ GameView::GameView(QWidget *parent) :
     m_Model = new Model;
     m_Engine = new GameEngine(m_Model);
     startTimer(10);
+    increment = 8;
+    QObject::connect(this, SIGNAL(movePaddle(char,int)),m_Model,SLOT(move(char,int)));
 }
 /*Destructor*/
 GameView::~GameView(){
-
+    delete m_Engine;
 }
 /*paint event*/
 void GameView::paintEvent(QPaintEvent *event){
@@ -43,48 +46,35 @@ void GameView::drawBackground(QPainter * painter){
 /*key press event*/
 void GameView::keyPressEvent(QKeyEvent *event){
     Q_UNUSED(event);
-    switch (event->key()) {
-    case Qt::Key_A:
-        this->m_Model->move('L',1);
-        break;
-    case Qt::Key_S:
-        this->m_Model->move('L',-1);
-        break;
-    case Qt::Key_K:
-        this->m_Model->move('R',1);
-        break;
-    case Qt::Key_L:
-        this->m_Model->move('R',-1);
-        break;
-    case Qt::Key_Q:
+    if(event->key() == Qt::Key_A)
+        emit movePaddle('L',increment);
+
+    if( event->key() == Qt::Key_S)
+        emit movePaddle('L',-increment);
+
+    if(event->key() == Qt::Key_K)
+        emit movePaddle('R',increment);
+
+    if( event->key() == Qt::Key_L)
+        emit movePaddle('R',-increment);
+
+    if(event->key() == Qt::Key_Q)
         qApp->exit();
-        break;
-        default:
-            QWidget::keyPressEvent(event);
-        }
 }
 /*key release event*/
 void GameView::keyReleaseEvent(QKeyEvent*event){
     Q_UNUSED(event);
-    switch (event->key()) {
-    case Qt::Key_A:
+    if(event->key() == Qt::Key_A)
         this->m_Model->move('L',0);
-        break;
-    case Qt::Key_S:
+
+    if( event->key() == Qt::Key_S)
         this->m_Model->move('L',0);
-        break;
-    case Qt::Key_K:
+
+    if(event->key() == Qt::Key_K)
         this->m_Model->move('R',0);
-        break;
-    case Qt::Key_L:
+
+    if( event->key() == Qt::Key_L)
         this->m_Model->move('R',0);
-        break;
-    case Qt::Key_Q:
-        qApp->exit();
-        break;
-        default:
-            QWidget::keyPressEvent(event);
-        }
 }
 /*timer event*/
 void GameView::timerEvent(QTimerEvent * event){

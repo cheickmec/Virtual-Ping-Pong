@@ -4,8 +4,8 @@ BallObj::BallObj()
 {
     this->rect = new QRect(200,200,20,20);
     this->angle = 0;
-    this->xDir = 5;
-    this->yDir = 0;
+    this->xDir = 3;
+    this->yDir = 3;
 }
 /*Destructor*/
 BallObj::~BallObj(){

@@ -2,16 +2,17 @@
 #define MODEL_H
 #include "ballobj.h"
 #include "paddleobj.h"
+
 class GameEngine;
 
-class Model
-{
-
+class Model : public QObject
+{    
 friend class GameEngine;
+Q_OBJECT
 public:
-    Model();
-    ~Model();
+    Model(QObject* parent = 0);
     void draw(QPainter*);
+public slots:
     void move(const char which, int Dir);
 private:
     BallObj* m_Ball;

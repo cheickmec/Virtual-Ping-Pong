@@ -1,17 +1,14 @@
 #include "model.h"
 /*Constructor*/
-Model::Model()
+
+Model::Model(QObject *parent) :
+    QObject(parent)
 {
     m_Ball = new BallObj;
     m_LeftPaddle = new PaddleObj(0);
     m_RightPaddle = new PaddleObj(780);
 }
-/*Destrcutor*/
-Model::~Model(){
-    delete m_Ball;
-    delete m_LeftPaddle;
-    delete m_RightPaddle;
-}
+
 /*Drawing function, will pass pointer to member attributes*/
 void Model::draw(QPainter *painter){
     m_Ball->draw(painter);
