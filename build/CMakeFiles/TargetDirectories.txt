@@ -1,0 +1,2 @@
+/home/student/Documents/QtCreatorProjects/PingPong/build/CMakeFiles/VirtualTennis_automoc.dir
+/home/student/Documents/QtCreatorProjects/PingPong/build/CMakeFiles/VirtualTennis.dir
