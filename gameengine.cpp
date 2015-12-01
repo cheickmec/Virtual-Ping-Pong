@@ -1,17 +1,13 @@
 #include "gameengine.h"
 #include <time.h>
+#include <QDebug>
 
-
-/*Construction take as argument model pointer*/
-GameEngine::GameEngine(Model* model)
+GameEngine::GameEngine(QObject* parent):QObject(parent){
+}
+/*Set Model*/
+void GameEngine::setModel(Model* model)
 {
     this->m_Model = model;
-
-}
-
-/*Destructor*/
-GameEngine::~GameEngine(){
-    //Leave model destruction to gameview
 }
 
 /*Update Model objects: collision check,

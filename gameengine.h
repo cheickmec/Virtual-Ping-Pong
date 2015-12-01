@@ -1,14 +1,19 @@
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 #include "model.h"
+#include <QObject>
 
-class GameEngine
+class GameEngine : public QObject
 {
+    Q_OBJECT
 public:
-    GameEngine(Model* model);
-    ~GameEngine();
-    void updateModel();
+    GameEngine(QObject* parent = 0);
+    void setModel(Model* model);
     void checkCollision();
+public slots:
+    void updateModel();
+signals:
+    void finished();
 private:
     Model* m_Model;
 };

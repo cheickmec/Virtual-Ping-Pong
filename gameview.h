@@ -25,6 +25,7 @@ public:
     Model* getModel();
 signals:
     void movePaddle(const char,int);
+    void updateEngine();
 public slots:
 
 private:
@@ -32,7 +33,6 @@ private:
     Model* m_Model;
     GameEngine* m_Engine;
     void drawBackground(QPainter*);
-
 };
 
 #endif // GAMEVIEW_H

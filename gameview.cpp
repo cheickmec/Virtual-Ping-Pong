@@ -2,21 +2,32 @@
 #include <QPainter>
 #include <QKeyEvent>
 #include <QtGui>
+#include <QThread>
 
 /*Constructor*/
 GameView::GameView(QWidget *parent) :
     QWidget(parent)
 {
+    QThread* thread = new QThread;
     this->setFixedSize(parent->size());
     m_Model = new Model;
-    m_Engine = new GameEngine(m_Model);
-    startTimer(10);
+    m_Engine = new GameEngine();
+    m_Engine->setModel(m_Model);
+    m_Engine->moveToThread(thread);
+    QObject::connect(m_Engine, SIGNAL(started()),m_Engine,SLOT(updateModel()));
+    QObject::connect(m_Engine, SIGNAL(finished()), m_Engine, SLOT(deleteLater()));
+    QObject::connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    QObject::connect(this, SIGNAL(updateEngine()), m_Engine, SLOT(updateModel()));
+
+    startTimer(17);
     increment = 8;
     QObject::connect(this, SIGNAL(movePaddle(char,int)),m_Model,SLOT(move(char,int)));
+    thread->start();
+
 }
 /*Destructor*/
 GameView::~GameView(){
-    delete m_Engine;
+
 }
 /*paint event*/
 void GameView::paintEvent(QPaintEvent *event){
@@ -79,7 +90,7 @@ void GameView::keyReleaseEvent(QKeyEvent*event){
 /*timer event*/
 void GameView::timerEvent(QTimerEvent * event){
     Q_UNUSED(event);
-    this->m_Engine->updateModel();
+    emit updateEngine();
     repaint();
 }
 /*Returns model */
