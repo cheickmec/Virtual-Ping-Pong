@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setFixedSize(800,500);
     m_gameView = new GameView(this);
     m_gameView->setFocus();
+    
 }
 
 MainWindow::~MainWindow()
